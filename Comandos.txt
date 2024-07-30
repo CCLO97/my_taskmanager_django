@@ -1,0 +1,22 @@
+python -m venv myenv (Crea un entorno virtual)
+myenv/Scripts/activate (Activa el entorno virtual)
+pip install django (Instala django)
+django-admin startproject taskmanager (Inicia el proyecto con nombre XXXX)
+cd taskmanager (Nos dirigimos a la carpeta del proyecto)
+python manage.py startapp tasks (Crea una aplicación dentro del proyecto)
+Se agrega la app en la ruta taskmanager/setings.py/installed_apps al final entre comillas 'tasks'
+en taskmanager/tasks/models.py se crean los modelos
+    class Task(models.Model):
+        title = models.CharField(max_length=200)
+        description = models.TextField()
+        completed = models.BooleanField(default=False)
+
+        def __str__(self):
+            return self.title
+python manage.py makemigrations (Prepara la migración)
+python manage.py migrate (Se crea la migración)
+instalamos sqlite
+instalamos sqlite viewer
+en tasks/admin.py se importa el modelo Task (from .models import Task)
+en el mismo archivo se le da acceso al administrador para poder acceder a Task (admin.site.register(Task))
+python manage.py createsuperuser (Crea super usuario)
