@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render,redirect,get_object_or_404
 
 # Create your views here.
 from .models import Task
@@ -8,11 +8,21 @@ def task_list(request):
     tasks = Task.objects.all()
     return render(request, 'tasks/task_list.html', {'tasks': tasks})
 def task_create(request):
-    if request.methhod == 'POST':
+    if request.method == 'POST':
         form = TaskForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('task_list')
     else:
-        form - TaskForm()
+        form = TaskForm()
     return render(request, 'tasks/task_form.html', {'form' : form})
+def task_update(request, pk):
+    task = get_object_or_404(Task, pk = pk)
+    if request.method == 'POST':
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect('task_list')
+    else:
+        form = TaskForm(instance=task)
+    return render(request, 'tasks/task_form.html', {'form': form})
